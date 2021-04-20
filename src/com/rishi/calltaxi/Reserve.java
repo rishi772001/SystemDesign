@@ -33,12 +33,12 @@ public class Reserve {
         positions.get(i).add(t);
     }
 
-    public static Map getPositions()
+    public static Map<Integer, List<Taxi>> getPositions()
     {
         return positions;
     }
 
-    public static HashMap getPoints()
+    public static HashMap<Integer, Character> getPoints()
     {
         return points;
     }
