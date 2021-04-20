@@ -1,21 +1,12 @@
 package com.rishi.calltaxi;
 
 public class Booking {
-    private int bookingId;
     private int customerId;
-    private String from;
-    private String to;
+    private int from;
+    private int to;
     private int pickupTime;
     private int dropTime;
     private int earnings;
-
-    public int getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(int bookingId) {
-        this.bookingId = bookingId;
-    }
 
     public int getCustomerId() {
         return customerId;
@@ -25,19 +16,19 @@ public class Booking {
         this.customerId = customerId;
     }
 
-    public String getFrom() {
+    public int getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(int from) {
         this.from = from;
     }
 
-    public String getTo() {
+    public int getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(int to) {
         this.to = to;
     }
 

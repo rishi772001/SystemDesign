@@ -8,12 +8,13 @@ public class Taxi {
     private String pos;
     private int totalEarnings;
     private Boolean isFree;
-    private static List<Booking> bookings = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
     Taxi(int id){
         this.id = id;
         this.pos = "a";
         this.totalEarnings = 0;
+        this.isFree = true;
     }
 
     public int getId() {
@@ -33,7 +34,7 @@ public class Taxi {
     }
 
     public void setTotalEarnings(int totalEarnings) {
-        this.totalEarnings = totalEarnings;
+        this.totalEarnings += totalEarnings;
     }
 
     public Boolean getFree() {
