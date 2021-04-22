@@ -3,29 +3,33 @@ package com.rishi.calltaxi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Taxi {
+public class Taxi extends Thread{
     private int id;
-    private String pos;
+    private int pos;
     private int totalEarnings;
     private Boolean isFree;
+
+    private int currpickup = -1, currdrop = -1;
+
+
     private List<Booking> bookings = new ArrayList<>();
 
     Taxi(int id){
         this.id = id;
-        this.pos = "a";
+        this.pos = 0;
         this.totalEarnings = 0;
         this.isFree = true;
     }
 
-    public int getId() {
+    public int getTaxiId() {
         return id;
     }
 
-    public String getPos() {
+    public int getPos() {
         return pos;
     }
 
-    public void setPos(String pos) {
+    public void setPos(int pos) {
         this.pos = pos;
     }
 
@@ -52,4 +56,62 @@ public class Taxi {
     public void setBookings(Booking book) {
         this.bookings.add(book);
     }
+
+    public static Taxi setTaxi(Taxi taxi, int pickup, int drop, int time, Booking book)
+    {
+        taxi.setFree(false);
+        taxi.currpickup = pickup;
+        taxi.currdrop = drop;
+        int distance = pickup + drop;
+        int earnings = (((distance * 15) - 5) * 10) + 100;
+        taxi.setTotalEarnings(earnings);
+        taxi.setBookings(book);
+        Thread th = new Thread();
+        th.start();
+        return taxi;
+    }
+
+    @Override
+    public void run()
+    {
+        while(pos > currpickup)
+        {
+            try {
+                Taxi.sleep(1000);
+                Reserve.updatePositions(pos, --pos, this);
+            } catch (Exception e) {
+                System.out.println(e);;
+            }
+        }
+        while(pos < currpickup)
+        {
+            try {
+                Taxi.sleep(1000);
+                Reserve.updatePositions(pos, ++pos, this);
+            } catch (Exception e) {
+                System.out.println(e);;
+            }
+        }
+        while(pos < currdrop)
+        {
+            try {
+                Taxi.sleep(1000);
+                Reserve.updatePositions(pos, ++pos, this);
+            } catch (Exception e) {
+                System.out.println(e);;
+            }
+        }
+        while(pos > currdrop)
+        {
+            try {
+                Taxi.sleep(1000);
+                Reserve.updatePositions(pos, --pos, this);
+            } catch (Exception e) {
+                System.out.println(e);;
+            }
+        }
+        this.setFree(true);
+
+    }
+
 }

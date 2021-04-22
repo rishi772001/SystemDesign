@@ -55,4 +55,18 @@ public class Booking {
     public void setEarnings(int earnings) {
         this.earnings = earnings;
     }
+
+    public void setBooking(int pickup, int drop, int time, int custId)
+    {
+        setCustomerId(custId);
+        setFrom(pickup);
+        setTo(drop);
+        setPickupTime(time);
+        int distance = pickup + drop;
+        int dropTime = time + distance;
+        int earnings = (((distance * 15) - 5) * 10) + 100;
+
+        setDropTime(dropTime);
+        setEarnings(earnings);
+    }
 }

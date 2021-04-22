@@ -12,8 +12,8 @@ public class Reserve {
     public static int len = 6;
 
     public static Taxi[] taxies = new Taxi[4];
-    public static HashMap<Integer, Character> points = new HashMap<>();
-    public static Map<Integer, List<Taxi>> positions = new HashMap<>();
+    private static HashMap<Integer, Character> points = new HashMap<>();
+    private static Map<Integer, List<Taxi>> positions = new HashMap<>();
 
     Reserve()
     {
@@ -28,9 +28,15 @@ public class Reserve {
         }
     }
 
-    private static void setPositions(int i, Taxi t)
+    public static void setPositions(int i, Taxi t)
     {
         positions.get(i).add(t);
+    }
+
+    public static void updatePositions(int remove, int add, Taxi t)
+    {
+        positions.get(remove).remove(t);
+        positions.get(add).add(t);
     }
 
     public static Map<Integer, List<Taxi>> getPositions()
@@ -48,8 +54,8 @@ public class Reserve {
         {
             System.out.println("----------------------------------");
             Taxi taxi = taxies[i];
-            System.out.print("Taxi Number:   " + taxi.getId() + "\t");
-            System.out.print("Current Position:   " + taxi.getPos() + "\t");
+            System.out.print("Taxi Number:   " + taxi.getTaxiId() + "\t");
+            System.out.print("Current Position:   " + (char)(taxi.getPos() + 97) + "\t");
             System.out.println("Total Earnings:   " + taxi.getTotalEarnings());
 
             System.out.println("BookingId \t CustomerId \t From \t To \t PickupTime \t DropTime \t Earnings");

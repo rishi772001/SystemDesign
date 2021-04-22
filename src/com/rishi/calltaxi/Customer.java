@@ -11,21 +11,7 @@ public class Customer {
         this.custId = id;
     }
 
-    private Booking setBooking(int pickup, int drop, int time)
-    {
-        Booking book = new Booking();
-        book.setCustomerId(this.custId);
-        book.setFrom(pickup);
-        book.setTo(drop);
-        book.setPickupTime(time);
-        int distance = pickup + drop;
-        int dropTime = time + distance;
-        int earnings = (((distance * 15) - 5) * 10) + 100;
 
-        book.setDropTime(dropTime);
-        book.setEarnings(earnings);
-        return book;
-    }
 
     private Taxi allocateTaxi(Map<Integer, List<Taxi>> positions, int pickup, int drop, int time, int i, int j)
     {
@@ -55,20 +41,13 @@ public class Customer {
         }
         if(taxi != null)
         {
-            taxi = setTaxi(taxi, pickup, drop, time);
+            Booking book = new Booking();
+            book.setBooking(pickup, drop, time, custId);
+            taxi = Taxi.setTaxi(taxi, pickup, drop, time, book);
         }
         return taxi;
     }
-    private Taxi setTaxi(Taxi taxi, int pickup, int drop, int time)
-    {
-        taxi.setFree(false);
-        int distance = pickup + drop;
-        int earnings = (((distance * 15) - 5) * 10) + 100;
-        taxi.setTotalEarnings(earnings);
-        Booking book = setBooking(pickup, drop, time);
-        taxi.setBookings(book);
-        return taxi;
-    }
+
     public Taxi book() {
         int time;
         int pickup, drop;
@@ -77,8 +56,9 @@ public class Customer {
         
         System.out.println("Enter Pickup Point");
         pickup = (int) (inp.next().charAt(0)) - 97;
-        System.out.println("Enter Drop Point(not same as pickup)");
+
         do {
+            System.out.println("Enter Drop Point(not same as pickup)");
             drop = (int) (inp.next().charAt(0)) - 97;
         }while (pickup == drop);
 
@@ -94,7 +74,9 @@ public class Customer {
             {
                 if(t.getFree())
                 {
-                    taxi = setTaxi(t, pickup, drop, time);
+                    Booking book = new Booking();
+                    book.setBooking(pickup, drop, time, custId);
+                    taxi = Taxi.setTaxi(t, pickup, drop, time, book);
                     return taxi;
                 }
             }

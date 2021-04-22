@@ -37,7 +37,7 @@ public class Main {
                     if(taxi == null)
                         System.out.println("Sorry no taxi found!!");
                     else
-                        System.out.println("Your taxi is booked, taxi id = " + taxi.getId());
+                        System.out.println("Your taxi is booked, taxi id = " + taxi.getTaxiId());
                     break;
                 case 2:
                     reserve.showBookings();
